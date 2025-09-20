@@ -10,6 +10,7 @@ import HomePage from "./home/Page";
 import "./App.css";
 import Contracts from "./pages/contracts/Page";
 import KYCPage from "./pages/kyc/Page";
+import Login from "./pages/login/Page";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/contracts", element: <Contracts /> },
       { path: "/kyc", element: <KYCPage /> },
+      { path: "/login", element: <Login /> },
       { path: "*", element: <Navigate to="/" /> },
     ],
   },
