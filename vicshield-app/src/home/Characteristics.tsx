@@ -1,9 +1,9 @@
-import Container from 'components/UI/Container'
+import Container from "~/components/UI/Container";
 
-import CT from 'statics/images/characteristics/contract.png'
-import CHART from 'statics/images/characteristics/chart.png'
-import CHART_FOLDER from 'statics/images/characteristics/chart_folder.png'
-import LIGHT from 'statics/images/characteristics/light.png'
+import CT from "~/statics/images/characteristics/contract.png";
+import CHART from "~/statics/images/characteristics/chart.png";
+import CHART_FOLDER from "~/statics/images/characteristics/chart_folder.png";
+import LIGHT from "~/statics/images/characteristics/light.png";
 
 const Characteristics: React.FC = () => {
   return (
@@ -69,7 +69,7 @@ const Characteristics: React.FC = () => {
         </div>
       </section>
     </Container>
-  )
-}
+  );
+};
 
-export default Characteristics
+export default Characteristics;

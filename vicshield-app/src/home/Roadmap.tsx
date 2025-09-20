@@ -1,6 +1,6 @@
-import Container from 'components/UI/Container'
+import Container from "~/components/UI/Container";
 
-import BG from 'statics/images/roadmap/background.png'
+import BG from "~/statics/images/roadmap/background.png";
 
 const Roadmap: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const Roadmap: React.FC = () => {
       <section className="flex flex-col px-6 md:px-8 gap-8 md:gap-16">
         <div
           className="page-title flex flex-col gap-4 md:gap-6 py-4 md:py-6 items-center text-center bg-no-repeat"
-          style={{ backgroundImage: `url(${BG})`, backgroundSize: '100% 100%' }}
+          style={{ backgroundImage: `url(${BG})`, backgroundSize: "100% 100%" }}
         >
           <span className="text-sm md:text-lg">THE ROADMAP TO RESHAPE</span>
           <p>The Future of Digital Signature and Contract Management</p>
@@ -20,7 +20,7 @@ const Roadmap: React.FC = () => {
         </div>
       </section>
     </Container>
-  )
-}
+  );
+};
 
-export default Roadmap
+export default Roadmap;

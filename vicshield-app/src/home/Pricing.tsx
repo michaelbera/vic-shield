@@ -1,57 +1,57 @@
-import { Fragment } from 'react'
-import Container from 'components/UI/Container'
+import { Fragment } from "react";
+import Container from "~/components/UI/Container";
 
-import CHECK from 'statics/images/pricing/check.svg'
-import X from 'statics/images/pricing/x.svg'
+import CHECK from "~/statics/images/pricing/check.svg";
+import X from "~/statics/images/pricing/x.svg";
 
 const PRICES = [
   {
-    title: 'Starter plan',
+    title: "Starter plan",
     desc: [
-      'Single user',
-      'Free signatures',
-      'Support from community',
-      'No storage or Integrations',
-      'No reports & analytics',
+      "Single user",
+      "Free signatures",
+      "Support from community",
+      "No storage or Integrations",
+      "No reports & analytics",
     ],
     icons: [CHECK, CHECK, CHECK, X, X],
     price: 29,
-    label: 'Great for Individuals',
+    label: "Great for Individuals",
   },
   {
-    title: 'Business plan',
+    title: "Business plan",
     desc: [
-      'Up to 50 users',
-      'Free signatures',
-      'Support from helpdesk',
-      'Organizational Features',
-      '3rd-party integration',
-      'Storage for integration',
-      'Reports & analytics',
+      "Up to 50 users",
+      "Free signatures",
+      "Support from helpdesk",
+      "Organizational Features",
+      "3rd-party integration",
+      "Storage for integration",
+      "Reports & analytics",
     ],
     icons: [CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK],
     price: 229,
-    label: 'Great for Bussiness',
+    label: "Great for Bussiness",
   },
 
   {
-    title: 'Custom PLAN',
+    title: "Custom PLAN",
     desc: [
-      'Unlimited users',
-      'Free signatures',
-      'Dedicated support',
-      'Organizational Features',
-      '3rd-party integration',
-      'Storage for integration',
-      'Reports & analytics',
-      'White-label configuration',
-      'Tailor-made approval layers',
+      "Unlimited users",
+      "Free signatures",
+      "Dedicated support",
+      "Organizational Features",
+      "3rd-party integration",
+      "Storage for integration",
+      "Reports & analytics",
+      "White-label configuration",
+      "Tailor-made approval layers",
     ],
     icons: [CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK],
     price: -1,
-    label: '',
+    label: "",
   },
-]
+];
 
 const Pricing: React.FC = () => {
   return (
@@ -100,7 +100,7 @@ const Pricing: React.FC = () => {
                   </div>
                   <div
                     className="flex flex-col items-center justify-center py-3 cursor-pointer"
-                    style={{ background: '#38B2AC' }}
+                    style={{ background: "#38B2AC" }}
                   >
                     Contact US
                   </div>
@@ -111,7 +111,7 @@ const Pricing: React.FC = () => {
         </div>
       </section>
     </Container>
-  )
-}
+  );
+};
 
-export default Pricing
+export default Pricing;

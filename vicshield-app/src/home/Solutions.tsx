@@ -1,5 +1,5 @@
-import Container from 'components/UI/Container'
-import SQUARE from 'statics/images/solution/square.png'
+import Container from "~/components/UI/Container";
+import SQUARE from "~/statics/images/solution/square.png";
 
 const Solutions: React.FC = () => {
   return (
@@ -66,7 +66,7 @@ const Solutions: React.FC = () => {
         </div>
       </section>
     </Container>
-  )
-}
+  );
+};
 
-export default Solutions
+export default Solutions;

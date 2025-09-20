@@ -1,6 +1,6 @@
-import Container from 'components/UI/Container'
-import bg from 'statics/images/banner/background.png'
-import sImg from 'statics/images/banner/s.png'
+import Container from "~/components/UI/Container";
+import bg from "~/statics/images/banner/background.png";
+import sImg from "~/statics/images/banner/s.png";
 
 const Banner: React.FC = () => {
   return (
@@ -26,7 +26,7 @@ const Banner: React.FC = () => {
         </div>
       </section>
     </Container>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;
