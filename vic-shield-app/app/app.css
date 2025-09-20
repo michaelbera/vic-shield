@@ -1,15 +1,88 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin "daisyui";
+
+/* just testing  - theme configs */
+@plugin "daisyui/theme" {
+  name: 'dark';
+  default: true;
+  --color-primary: #0a8fdc;
+  --color-secondary: #6b7280;
+  --color-base-300: #111827;
+  --color-base-200: #1c1c28;
+  --radius-field: 1rem;
+  --size-field: 0.3125rem;
+  --radius-box: 2rem;
+}
+
+@plugin "daisyui/theme" {
+  name: 'light';
+  default: false;
+  --color-primary: #0a8fdc;
+  --color-secondary: cyan;
+  --color-base-300: #1c1c28;
+
+  /* variable */
+  /* --color-primary-content: #000;
+  --color-secondary-content: #000;
+  --color-accent: #000;
+  --color-accent-content: #000;
+  --color-neutral: #000;
+  --color-neutral-content: #000;
+  --color-base-100: #000;
+  --color-base-200: #000;
+  --color-base-300: #000;
+  --color-base-content: #000;
+  --color-info: #000;
+  --color-info-content: #000;
+  --color-success: #000;
+  --color-success-content: #000;
+  --color-warning: #000;
+  --color-warning-content: #000;
+  --color-error: #000;
+  --color-error-content: #000;
+  --radius-selector: #000;
+  --radius-field: #000;
+  --radius-box: #000;
+  --size-selector: #000;
+  --size-field: #000;
+  --border: #000;
+  --depth: #000;
+  --noise: #000; */
+}
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-base-200;
+  font-family: 'Poppins', sans-serif;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+.bg-linear {
+  background: linear-gradient(
+      200.74deg,
+      rgba(214, 211, 194, 0.2) 0%,
+      rgba(92, 92, 92, 0.14) 100%
+    ),
+    linear-gradient(0deg, #111827, #111827);
+}
+
+.page-title p,
+.page-title h1 {
+  @apply text-xl md:text-6xl font-bold;
+}
+.page-title span {
+  @apply text-sm md:text-lg;
+}
+
+.border-gradient {
+  border: 2px solid transparent;
+  border-image: linear-gradient(
+    136.24deg,
+    #0b7fc4 -2.25%,
+    rgba(171, 171, 241, 0) 90.8%
+  );
 }
