@@ -58,7 +58,7 @@ const IdentityVerification: React.FC<IdentityVerificationProps> = ({
     }
   };
 
-  const handleInputChange = (field: keyof IdentityInfo, value: any) => {
+  const handleInputChange = (field: keyof IdentityInfo, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
