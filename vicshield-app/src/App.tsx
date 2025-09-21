@@ -5,12 +5,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import HomePage from "./home/Page";
+import HomePage from "./pages/home/Page";
 
 import "./App.css";
 import Contracts from "./pages/contracts/Page";
 import KYCPage from "./pages/kyc/Page";
 import Login from "./pages/login/Page";
+import Navbar from "./components/Header";
+import Footer from "./components/Footer";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +31,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+      <Navbar />
       <RouterProvider router={router} />
+      <Footer />
     </>
   );
 }
