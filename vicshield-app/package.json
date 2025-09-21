@@ -15,15 +15,16 @@
     "@tanstack/react-query": "^5.89.0",
     "clsx": "^2.1.1",
     "daisyui": "^5.1.13",
-    "openai": "^5.22.0",
     "ethers": "^6.15.0",
+    "openai": "^5.22.0",
     "path": "^0.12.7",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",
     "viem": "^2.37.7",
     "vite-tsconfig-paths": "^5.1.4",
-    "wagmi": "^2.17.1"
+    "wagmi": "^2.17.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
