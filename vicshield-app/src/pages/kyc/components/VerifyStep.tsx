@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import OpenAI from 'openai';
+import OpenAI from "openai";
 import type { KYCData } from "../Page";
 
 interface VerifyStepProps {
@@ -8,7 +8,8 @@ interface VerifyStepProps {
 }
 
 const VerifyStep = ({ kycData, onComplete }: VerifyStepProps) => {
-  const [extractedInfo, setExtractedInfo] = useState<KYCData['extractedInfo']>(null);
+  const [extractedInfo, setExtractedInfo] =
+    useState<KYCData["extractedInfo"]>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,12 +22,14 @@ const VerifyStep = ({ kycData, onComplete }: VerifyStepProps) => {
         // Check if OpenAI API key is available
         const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
         if (!apiKey) {
-          throw new Error("OpenAI API key not configured. Please set VITE_OPENAI_API_KEY in your environment.");
+          throw new Error(
+            "OpenAI API key not configured. Please set VITE_OPENAI_API_KEY in your environment."
+          );
         }
 
         const openai = new OpenAI({
           apiKey: apiKey,
-          dangerouslyAllowBrowser: true // Note: In production, this should be done server-side
+          dangerouslyAllowBrowser: true, // Note: In production, this should be done server-side
         });
 
         // Convert images to base64
@@ -56,7 +59,7 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
         `;
 
         const response = await openai.chat.completions.create({
-          model: "gpt-4-vision-preview",
+          model: "gpt-5",
           messages: [
             {
               role: "user",
@@ -93,7 +96,10 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
             });
           } catch (parseError) {
             // Fallback: create mock data for development
-            console.warn("Failed to parse OpenAI response, using mock data:", parseError);
+            console.warn(
+              "Failed to parse OpenAI response, using mock data:",
+              parseError
+            );
             setExtractedInfo({
               name: "Nguyen Van A",
               idNumber: "123456789012",
@@ -108,7 +114,7 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
       } catch (err) {
         console.error("Verification error:", err);
         setError(err instanceof Error ? err.message : "Verification failed");
-        
+
         // For development: provide mock data if API fails
         setExtractedInfo({
           name: "Nguyen Van A (Demo)",
@@ -133,9 +139,9 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
       reader.readAsDataURL(file);
       reader.onload = () => {
         const result = reader.result as string;
-        resolve(result.split(',')[1]); // Remove data:image/jpeg;base64, prefix
+        resolve(result.split(",")[1]); // Remove data:image/jpeg;base64, prefix
       };
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
   };
 
@@ -169,8 +175,18 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
 
         {error && (
           <div className="alert alert-warning">
-            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+              />
             </svg>
             <span>{error}</span>
           </div>
@@ -178,13 +194,31 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
 
         {extractedInfo && (
           <>
-            <div className={`alert ${extractedInfo.isValid ? 'alert-success' : 'alert-error'}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={extractedInfo.isValid ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" : "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"} />
+            <div
+              className={`alert ${
+                extractedInfo.isValid ? "alert-success" : "alert-error"
+              }`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d={
+                    extractedInfo.isValid
+                      ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      : "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  }
+                />
               </svg>
               <span>
-                {extractedInfo.isValid 
-                  ? "Valid Vietnamese ID card detected" 
+                {extractedInfo.isValid
+                  ? "Valid Vietnamese ID card detected"
                   : "Invalid or unrecognized document"}
               </span>
             </div>
@@ -194,11 +228,11 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
                 <label className="label">
                   <span className="label-text font-medium">Full Name</span>
                 </label>
-                <input 
-                  type="text" 
-                  value={extractedInfo.name} 
-                  className="input input-bordered" 
-                  readOnly 
+                <input
+                  type="text"
+                  value={extractedInfo.name}
+                  className="input input-bordered"
+                  readOnly
                 />
               </div>
 
@@ -206,11 +240,11 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
                 <label className="label">
                   <span className="label-text font-medium">ID Number</span>
                 </label>
-                <input 
-                  type="text" 
-                  value={extractedInfo.idNumber} 
-                  className="input input-bordered" 
-                  readOnly 
+                <input
+                  type="text"
+                  value={extractedInfo.idNumber}
+                  className="input input-bordered"
+                  readOnly
                 />
               </div>
 
@@ -218,11 +252,11 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
                 <label className="label">
                   <span className="label-text font-medium">Date of Birth</span>
                 </label>
-                <input 
-                  type="text" 
-                  value={extractedInfo.dateOfBirth} 
-                  className="input input-bordered" 
-                  readOnly 
+                <input
+                  type="text"
+                  value={extractedInfo.dateOfBirth}
+                  className="input input-bordered"
+                  readOnly
                 />
               </div>
 
@@ -230,11 +264,11 @@ If the document is not a Vietnamese ID card or the images are unclear, set isVal
                 <label className="label">
                   <span className="label-text font-medium">Place of Birth</span>
                 </label>
-                <input 
-                  type="text" 
-                  value={extractedInfo.placeOfBirth} 
-                  className="input input-bordered" 
-                  readOnly 
+                <input
+                  type="text"
+                  value={extractedInfo.placeOfBirth}
+                  className="input input-bordered"
+                  readOnly
                 />
               </div>
             </div>
