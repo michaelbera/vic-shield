@@ -23,11 +23,16 @@ export interface Contract {
   templateName: string;
   title: string;
   data: Record<string, any>;
+  content?: string; // Rich text content from editor
   status: ContractStatus;
   createdAt: Date;
   updatedAt: Date;
+  expirationDate?: Date;
   createdBy?: string;
   parties?: ContractParty[];
+  signers: ContractUser[];
+  reviewers: ContractUser[];
+  viewers: ContractUser[];
 }
 
 export interface ContractParty {
@@ -37,6 +42,15 @@ export interface ContractParty {
   role: 'signer' | 'witness' | 'notary';
   signed: boolean;
   signedAt?: Date;
+}
+
+export interface ContractUser {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  department?: string;
+  position?: string;
 }
 
 export type ContractCategory = 

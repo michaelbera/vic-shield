@@ -128,9 +128,18 @@ const mockContracts: Contract[] = [
       property_address: '123 Nguyễn Trãi, Quận 1, TP.HCM',
       price: 5000000000,
     },
+    signers: [
+      { id: '1', name: 'Nguyễn Văn A', email: 'a.nguyen@example.com', position: 'Người mua' },
+      { id: '2', name: 'Trần Thị B', email: 'b.tran@example.com', position: 'Người bán' }
+    ],
+    reviewers: [
+      { id: '7', name: 'Ngô Thị Lan', email: 'lan.ngo@vicshield.com', department: 'Pháp chế', position: 'Luật sư trưởng' }
+    ],
+    viewers: [],
     status: 'draft',
     createdAt: new Date('2024-01-15'),
     updatedAt: new Date('2024-01-15'),
+    expirationDate: new Date('2024-06-01'),
   },
   {
     id: '2',
@@ -143,9 +152,18 @@ const mockContracts: Contract[] = [
       property_address: '456 Nguyễn Hữu Thọ, Quận 7, TP.HCM',
       monthly_rent: 8000000,
     },
+    signers: [
+      { id: '3', name: 'Lê Văn C', email: 'c.le@example.com', position: 'Người thuê' },
+      { id: '4', name: 'Phạm Thị D', email: 'd.pham@example.com', position: 'Chủ nhà' }
+    ],
+    reviewers: [],
+    viewers: [
+      { id: '5', name: 'Võ Thị Hương', email: 'huong.vo@vicshield.com', department: 'Nhân sự', position: 'Trưởng phòng nhân sự' }
+    ],
     status: 'signed',
     createdAt: new Date('2024-01-10'),
     updatedAt: new Date('2024-01-12'),
+    expirationDate: new Date('2024-05-15'),
   },
   {
     id: '3',
@@ -158,9 +176,18 @@ const mockContracts: Contract[] = [
       position: 'Frontend Developer',
       salary: 25000000,
     },
+    signers: [
+      { id: '8', name: 'Hoàng Văn E', email: 'e.hoang@example.com', position: 'Nhân viên' },
+      { id: '5', name: 'Võ Thị Hương', email: 'huong.vo@vicshield.com', department: 'Nhân sự', position: 'Trưởng phòng nhân sự' }
+    ],
+    reviewers: [
+      { id: '7', name: 'Ngô Thị Lan', email: 'lan.ngo@vicshield.com', department: 'Pháp chế', position: 'Luật sư trưởng' }
+    ],
+    viewers: [],
     status: 'pending',
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-08'),
+    expirationDate: new Date('2024-04-05'),
   },
 ];
 
@@ -183,6 +210,9 @@ export const useContractStore = create<ContractStore>()(
           templateName: template.name,
           title,
           data: {},
+          signers: [],
+          reviewers: [],
+          viewers: [],
           status: 'draft',
           createdAt: new Date(),
           updatedAt: new Date(),
