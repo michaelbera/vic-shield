@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
   Navigate,
-  Outlet,
   RouterProvider,
 } from "react-router-dom";
 
@@ -11,13 +10,12 @@ import "./App.css";
 import Contracts from "./pages/contracts/Page";
 import KYCPage from "./pages/kyc/Page";
 import Login from "./pages/login/Page";
-import Navbar from "./components/Header";
-import Footer from "./components/Footer";
+import Layout from "./components/Layout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Outlet />,
+    element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
       { path: "/contracts", element: <Contracts /> },
@@ -31,9 +29,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <Navbar />
       <RouterProvider router={router} />
-      <Footer />
     </>
   );
 }
