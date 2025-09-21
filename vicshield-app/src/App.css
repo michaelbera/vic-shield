@@ -111,3 +111,22 @@ body {
 .card-gradient .card-gradient-body {
   @apply flex-1 w-full h-full bg-base-300 card;
 }
+.orb {
+  @apply rounded-full blur-xl mix-blend-screen;
+  background: radial-gradient(
+    circle at center,
+    rgba(10, 143, 220, 0.9) 0%,
+    rgba(10, 143, 220, 0.5) 30%,
+    rgba(10, 143, 220, 0.15) 60%,
+    rgba(10, 143, 220, 0) 100%
+  );
+}
+.orp {
+  @apply rounded-full blur-xl mix-blend-screen;
+  background: radial-gradient(
+    circle at center,
+    rgba(87, 70, 219, 0.9) 0%,
+    rgba(87, 70, 219, 0) 0%,
+    100%
+  );
+}

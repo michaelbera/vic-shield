@@ -13,7 +13,8 @@ const Solutions: React.FC = () => {
             custody models.
           </span>
         </div>
-        <div className="w-full">
+        <div className="relative w-full">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full md:w-3/4 h-auto aspect-square orb" />
           <img
             src={SQUARE}
             className="w-full h-auto object-contain"
