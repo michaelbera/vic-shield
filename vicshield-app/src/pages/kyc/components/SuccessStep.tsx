@@ -1,18 +1,28 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 const SuccessStep = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
+  const { primaryWallet } = useDynamicContext();
 
   useEffect(() => {
     // Simulate processing time with loading animation
     const timer = setTimeout(() => {
       setShowSuccess(true);
+      
+      // Save KYC completion status to localStorage
+      if (primaryWallet?.address) {
+        const walletAddress = primaryWallet.address;
+        localStorage.setItem(`kyc_completed_${walletAddress}`, 'true');
+        // Also store the completion timestamp
+        localStorage.setItem(`kyc_completed_date_${walletAddress}`, new Date().toISOString());
+      }
     }, 3000); // 3 seconds of loading
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [primaryWallet]);
 
   const handleGoHome = () => {
     navigate("/");
