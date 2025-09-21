@@ -91,7 +91,7 @@ const Pricing: React.FC = () => {
                 <Fragment>
                   <div className="flex flex-col gap-2 px-4 md:px-6">
                     <p className="text-3xl md:text-6xl font-bold">
-                      $29
+                      ${p.price}
                       <small className="text-base md:text-xl font-normal">
                         /month
                       </small>

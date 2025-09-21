@@ -187,7 +187,7 @@ const ROADMAP = [
 const Roadmap: React.FC = () => {
   return (
     <Container>
-      <section className="flex flex-col px-6 md:px-8 gap-8 md:gap-16">
+      <section className="flex flex-col px-6 md:px-8">
         <div
           className="page-title flex flex-col gap-4 md:gap-6 py-4 md:py-6 items-center text-center bg-no-repeat"
           style={{ backgroundImage: `url(${BG})`, backgroundSize: "100% 100%" }}
@@ -195,7 +195,7 @@ const Roadmap: React.FC = () => {
           <span className="text-sm md:text-lg">THE ROADMAP TO RESHAPE</span>
           <p>The Future of Digital Signature and Contract Management</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 p-6 md:p-8 bg-base-300 rounded-b-3xl">
           {ROADMAP.map((r) => {
             const { w, h } = r.configs;
             return (
