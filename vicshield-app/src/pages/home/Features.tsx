@@ -84,45 +84,49 @@ const Features: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {FEATURES.map((f) => (
             <div
-              className={clsx(
-                "grid grid-cols-3 card bg-base-300 p-4 md:p-6 gap-4 md:gap-6",
-                {
-                  "col-span-full md:col-span-1": f.size === 1,
-                  "col-span-full md:col-span-2": f.size === 2,
-                }
-              )}
+              className={clsx("card-gradient", {
+                "col-span-full md:col-span-1": f.size === 1,
+                "col-span-full md:col-span-2": f.size === 2,
+              })}
               key={f.title}
             >
-              <div
-                className={clsx("w-full flex flex-col gap-2 md:gap-4", {
-                  "col-span-full md:col-span-2": !!f.img,
-                  "col-span-full": !f.img,
-                })}
-              >
-                <div className="flex flex-row gap-1">
-                  {!!f.icon && <img src={f.icon} />}
-                  <p
-                    className={clsx("", {
-                      "text-xl md:text-5xl": f.type === "upper",
-                      "text-base md:text-xl": f.type === "lower",
+              <div className="card-gradient-body">
+                <div className="grid grid-cols-3 p-4 md:p-6 gap-4 md:gap-6">
+                  <div
+                    className={clsx("w-full flex flex-col gap-2 md:gap-4", {
+                      "col-span-full md:col-span-2": !!f.img,
+                      "col-span-full": !f.img,
                     })}
                   >
-                    {f.title}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  {f.desc.map((d) => (
-                    <span className="text-sm md:text-base" key={d}>
-                      {d}
-                    </span>
-                  ))}
+                    <div className="flex flex-row gap-1">
+                      {!!f.icon && <img src={f.icon} />}
+                      <p
+                        className={clsx("", {
+                          "text-xl md:text-5xl": f.type === "upper",
+                          "text-base md:text-xl": f.type === "lower",
+                        })}
+                      >
+                        {f.title}
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      {f.desc.map((d) => (
+                        <span className="text-sm md:text-base" key={d}>
+                          {d}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  {!!f.img && (
+                    <div className="w-full col-span-full md:col-span-1 flex flex-col items-center justify-center">
+                      <img
+                        className="w-full h-auto object-contain"
+                        src={f.img}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
-              {!!f.img && (
-                <div className="w-full col-span-full md:col-span-1 flex flex-col items-center justify-center">
-                  <img className="w-full h-auto object-contain" src={f.img} />
-                </div>
-              )}
             </div>
           ))}
         </div>

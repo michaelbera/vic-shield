@@ -1,9 +1,9 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin "daisyui";
 
 /* just testing  - theme configs */
 @plugin "daisyui/theme" {
-  name: 'dark';
+  name: "dark";
   default: true;
   --color-primary: #0a8fdc;
   --color-secondary: #6b7280;
@@ -15,7 +15,7 @@
 }
 
 @plugin "daisyui/theme" {
-  name: 'light';
+  name: "light";
   default: false;
   --color-primary: #0a8fdc;
   --color-secondary: cyan;
@@ -51,23 +51,20 @@
 }
 
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html,
 body {
-  @apply bg-base-200;
-  font-family: 'Poppins', sans-serif;
-}
+  --card-gradient-color-f: #0b7fc4;
+  --card-gradient-color-e: #ababf100;
+  --card-gradient-angle: 136.24deg;
+  --card-gradient-alpha-f: -2.25%;
+  --card-gradient-alpha-e: 90.8%;
 
-.bg-linear {
-  background: linear-gradient(
-      200.74deg,
-      rgba(214, 211, 194, 0.2) 0%,
-      rgba(92, 92, 92, 0.14) 100%
-    ),
-    linear-gradient(0deg, #111827, #111827);
+  @apply bg-base-200;
+  font-family: "Poppins", sans-serif;
 }
 
 .page-title p,
@@ -78,11 +75,39 @@ body {
   @apply text-sm md:text-lg;
 }
 
-.border-gradient {
-  border: 2px solid transparent;
-  border-image: linear-gradient(
-    136.24deg,
-    #0b7fc4 -2.25%,
-    rgba(171, 171, 241, 0) 90.8%
+.card-gradient {
+  @apply w-full p-[1px] card;
+  background: linear-gradient(
+    var(--card-gradient-angle),
+    var(--card-gradient-color-f) var(--card-gradient-alpha-f),
+    var(--card-gradient-color-e) var(--card-gradient-alpha-e)
   );
+}
+.card-gradient.gradient-bottom-left {
+  --card-gradient-angle: 200.74deg;
+  --card-gradient-alpha-f: 0%;
+  --card-gradient-alpha-e: 100%;
+}
+.card-gradient.gradient-purple {
+  --card-gradient-color-f: #ac41f0;
+  --card-gradient-color-e: #ababf100;
+}
+.card-gradient.gradient-red {
+  --card-gradient-color-f: #cb615a;
+  --card-gradient-color-e: #ababf100;
+}
+.card-gradient.gradient-orange {
+  --card-gradient-color-f: #e19b31;
+  --card-gradient-color-e: #ababf100;
+}
+.card-gradient.gradient-green {
+  --card-gradient-color-f: #11c15b;
+  --card-gradient-color-e: #ababf100;
+}
+.card-gradient.gradient-neutral {
+  --card-gradient-color-f: #4a92fe;
+  --card-gradient-color-e: #14141400;
+}
+.card-gradient .card-gradient-body {
+  @apply flex-1 w-full h-full bg-base-300 card;
 }
