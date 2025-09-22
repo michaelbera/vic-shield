@@ -1,22 +1,21 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 import { useAuthStore } from "~/store/authStore";
 import Container from "~/components/UI/Container";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, primaryWallet } = useDynamicContext();
   const { isAuthenticated, isKycCompleted } = useAuthStore();
 
   useEffect(() => {
     if (isAuthenticated) {
       if (isKycCompleted) {
         // User has completed KYC, redirect to contracts
-        navigate('/contracts');
+        navigate("/contracts");
       } else {
         // User hasn't completed KYC, redirect to KYC page
-        navigate('/kyc');
+        navigate("/kyc");
       }
     }
   }, [isAuthenticated, isKycCompleted, navigate]);
@@ -27,7 +26,7 @@ const Login = () => {
         <div className="page-title flex flex-col gap-4 md:gap-6 items-center text-center max-w-2xl">
           <p>Welcome to VicShield</p>
           <span>
-            Connect your wallet to get started with secure contract signing. 
+            Connect your wallet to get started with secure contract signing.
             First-time users will need to complete KYC verification.
           </span>
         </div>
@@ -40,11 +39,12 @@ const Login = () => {
                 Choose your preferred wallet to continue
               </p>
             </div>
-            
+
             <DynamicWidget />
-            
+
             <div className="text-xs text-base-content/60 text-center max-w-xs">
-              By connecting your wallet, you agree to our Terms of Service and Privacy Policy.
+              By connecting your wallet, you agree to our Terms of Service and
+              Privacy Policy.
             </div>
           </div>
         </div>
