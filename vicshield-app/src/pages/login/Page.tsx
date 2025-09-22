@@ -1,31 +1,25 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { useAuthStore } from "~/store/authStore";
 import Container from "~/components/UI/Container";
 
 const Login = () => {
   const navigate = useNavigate();
   const { user, primaryWallet } = useDynamicContext();
+  const { isAuthenticated, isKycCompleted } = useAuthStore();
 
   useEffect(() => {
-    if (user && primaryWallet) {
-      // Get the wallet address
-      const walletAddress = primaryWallet.address;
-      
-      if (walletAddress) {
-        // Check if user has completed KYC by checking localStorage
-        const kycStatus = localStorage.getItem(`kyc_completed_${walletAddress}`);
-        
-        if (kycStatus === 'true') {
-          // User has completed KYC, redirect to home
-          navigate('/');
-        } else {
-          // User hasn't completed KYC, redirect to KYC page
-          navigate('/kyc');
-        }
+    if (isAuthenticated) {
+      if (isKycCompleted) {
+        // User has completed KYC, redirect to contracts
+        navigate('/contracts');
+      } else {
+        // User hasn't completed KYC, redirect to KYC page
+        navigate('/kyc');
       }
     }
-  }, [user, primaryWallet, navigate]);
+  }, [isAuthenticated, isKycCompleted, navigate]);
 
   return (
     <Container>

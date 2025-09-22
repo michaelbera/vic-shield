@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
+import { useAuthStore } from "~/store/authStore";
 import Container from "./UI/Container";
 
 const Navbar: React.FC = () => {
+  const { isAuthenticated, isKycCompleted, walletAddress, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <Container innerClassName="p-4">
       <nav className="flex justify-between items-center px-2 py-2 bg-[#111324] rounded-full">
@@ -11,18 +18,43 @@ const Navbar: React.FC = () => {
             <p>VicShield</p>
           </Link>
         </div>
-        <ul className="flex gap-6">
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            {" "}
-            <Link to="/kyc">KYC</Link>
-          </li>
-          <li>Roadmap</li>
-          <li>Pricing</li>
-        </ul>
-        <button className="btn btn-primary rounded-full">Use Vicshield</button>
+        
+        {isAuthenticated ? (
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="text-sm">
+                <div className="font-medium">
+                  {walletAddress ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : 'User'}
+                </div>
+                <div className="text-xs text-gray-400">
+                  {isKycCompleted ? '✅ KYC Verified' : '⚠️ KYC Pending'}
+                </div>
+              </div>
+            </div>
+            
+            {isKycCompleted && (
+              <Link to="/contracts" className="btn btn-primary btn-sm rounded-full">
+                Contracts
+              </Link>
+            )}
+            
+            <button 
+              onClick={handleLogout}
+              className="btn btn-outline btn-sm rounded-full"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <Link to="/login" className="btn btn-outline btn-sm rounded-full">
+              Login
+            </Link>
+            <Link to="/login" className="btn btn-primary btn-sm rounded-full">
+              Get Started
+            </Link>
+          </div>
+        )}
       </nav>
     </Container>
   );
