@@ -1,0 +1,199 @@
+# copilot.toml
+# Mục tiêu: Khi bạn bảo “tạo UI mới”, Copilot sẽ:
+# - Ưu tiên class DaisyUI (btn, card, input, alert, modal...)
+# - Kế thừa biến/tone từ App.css
+# - Học theo layout/tsx conventions của src/pages/home/Page.tsx
+
+[project]
+name = "Vicshield FE"
+description = "React + Vite + Tailwind + DaisyUI. Theme kế thừa từ App.css và src/pages/home/Page.tsx."
+
+[stack]
+framework = "React"
+language = "TypeScript"
+bundler = "Vite"
+styling = "TailwindCSS + DaisyUI"
+animation = "Framer Motion (nhẹ, tôn trọng prefers-reduced-motion)"
+
+[context.files]
+# Khai báo các file “nguồn sự thật” để Copilot tham chiếu.
+primary = [
+  "src/App.css",
+  "src/pages/home/Page.tsx",
+  "tailwind.config.ts",
+  "postcss.config.js"
+]
+
+[context.references]
+# Nói rõ nguồn component để Copilot “bám theo”
+docs = [
+  "https://daisyui.com/components/",
+  "https://daisyui.com/components/button/",
+  "https://daisyui.com/components/card/",
+  "https://daisyui.com/components/navbar/",
+  "https://daisyui.com/components/drawer/",
+  "https://daisyui.com/components/modal/",
+  "https://daisyui.com/components/tabs/",
+  "https://daisyui.com/components/table/",
+  "https://daisyui.com/components/steps/",
+  "https://daisyui.com/components/tooltip/",
+  "https://daisyui.com/components/alert/",
+  "https://daisyui.com/components/toast/",
+  "https://daisyui.com/components/progress/",
+  "https://daisyui.com/components/rating/",
+  "https://daisyui.com/components/form/"
+]
+
+
+[theme]
+# DaisyUI: gắn data-theme ở <html> hoặc <body>.
+data_theme_attr = "data-theme"
+fallback_theme = "dark"   # nếu không tìm thấy, dùng 'light' hoặc 'dark'
+
+# Ưu tiên dùng class DaisyUI thay vì tự bịa style.
+[theme.daisyui_priority]
+prefer = [
+  "btn","btn-primary","btn-secondary","btn-accent","btn-outline","btn-ghost","btn-link",
+  "card","card-body","card-title","card-actions",
+  "navbar","menu","dropdown","breadcrumbs",
+  "drawer","drawer-content","drawer-side","drawer-toggle","drawer-overlay",
+  "modal","modal-open","modal-box","modal-action",
+  "tabs","tab","tab-active","tab-bordered",
+  "input","input-bordered","textarea","select","checkbox","toggle","switch","range","file-input",
+  "label","form-control","join",
+  "alert","toast","badge","avatar","chip","tooltip",
+  "table","table-zebra","skeleton",
+  "steps","step","progress","radial-progress","rating"
+]
+avoid_inline_style = true
+
+[theme.app_css_hints]
+# Ghi các CSS variables bạn đang dùng để Copilot không override bừa
+respect_css_vars = [
+  "--vs-color-bg","--vs-color-card","--vs-color-text",
+  "--vs-color-accent","--vs-radius","--vs-shadow"
+]
+
+[layout]
+rules = [
+  "Mobile-first; stack dọc < md; grid/cột ở >= md",
+  "container mx-auto px-4; max-w-screen-xl nếu không có quy định khác",
+  "Khoảng cách: gap-4 (mobile) / gap-6 (desktop)"
+]
+
+[components]
+# Mẫu tổ chức component theo đúng daisyUI
+preferred = [
+  "Card: .card > .card-body, .card-title, .card-actions",
+  "Navbar + Drawer cho mobile menu",
+  "Form: .form-control + .label + .input/.select + helper/error",
+  "Modal: .modal + .modal-box + .modal-action (focus trap)",
+  "Tabs: .tabs + .tab.tab-active + tab panels",
+  "Table có thead/tbody đúng semantics + .table, .table-zebra",
+  "Toast/Alert cho feedback"
+]
+a11y = [
+  "Semantic HTML + role phù hợp (dialog, tablist, menu, tooltip)",
+  "Focus ring rõ; keyboard navigable",
+  "Tôn trọng prefers-reduced-motion"
+]
+
+[ux_guidelines]
+forms = [
+  "Label bắt buộc; error dưới input",
+  "Disabled & loading state rõ ràng (btn loading)"
+]
+feedback = [
+  "Dùng .alert hoặc .toast cho success/error/info",
+  "Skeleton khi chờ dữ liệu; tránh layout shift"
+]
+navigation = [
+  "Navbar sticky + shadow khi scroll",
+  "Drawer cho mobile; breadcrumbs khi > 2 cấp"
+]
+
+[tailwind_hints]
+utility_defaults = [
+  "container mx-auto px-4",
+  "grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6",
+  "rounded-2xl shadow-lg"
+]
+typography = [
+  "h1.text-3xl.font-bold",
+  "h2.text-2xl.font-semibold",
+  "p.text-base opacity-80 leading-relaxed"
+]
+
+[prompts.examples]
+# Những prompt ngắn để Copilot tự “nhớ” cách ráp component từ daisyui.com
+
+hero_section = """
+Build a hero section using DaisyUI:
+- container mx-auto px-4 max-w-screen-xl
+- Heading + subcopy
+- 2 CTAs: .btn.btn-primary and .btn.btn-outline
+- Illustration on the right for ≥ md (hidden on mobile)
+- Use classes exactly as daisyui.com suggests; no inline styles
+"""
+
+feature_cards = """
+Create a 3-card feature grid:
+- Parent: grid grid-cols-1 md:grid-cols-3 gap-6
+- Each card: <div class='card shadow-lg'><div class='card-body'> ... </div></div>
+- Title: .card-title; actions: .card-actions
+- Keep spacing & tokens from App.css if defined
+"""
+
+navbar_drawer = """
+Responsive navbar with drawer:
+- .navbar for top bar; .drawer for mobile menu
+- .drawer-toggle checkbox, .drawer-content, .drawer-side, .drawer-overlay
+- Menu items use .menu .menu-horizontal at desktop; .menu .menu-vertical in drawer
+"""
+
+auth_form = """
+Login form using DaisyUI:
+- .form-control blocks; .label + .input.input-bordered
+- Validate email/password; show error text under fields
+- Submit: .btn.btn-primary with loading state
+- A11y: label for, aria-invalid on error
+"""
+
+modal_example = """
+Modal per DaisyUI:
+- Trigger button opens .modal by toggling state/class
+- .modal > .modal-box with content and .modal-action for buttons
+- Focus trap and Escape to close
+"""
+
+table_page = """
+Data table page:
+- .table.table-zebra with sticky header at desktop
+- Search input (.input) above, pagination controls below (.btn, .join)
+- Empty state with .alert.info + CTA
+"""
+
+[do_dont]
+do = [
+  "Dùng đúng class & cấu trúc từ daisyui.com",
+  "Tận dụng component có sẵn trước khi custom",
+  "Map màu/spacing sang CSS variables trong App.css nếu cần"
+]
+dont = [
+  "Inline style khi đã có class tương đương",
+  "Bịa thêm class không có trong DaisyUI",
+  "Animation quá dày hoặc không xét reduced-motion"
+]
+
+[quality]
+performance = []
+lint = ["ESLint + Prettier"]
+testing = ["Vitest + Testing Library (critical flows)"]
+
+[workflow]
+pr_checklist = [
+  "Screenshot trước/sau (desktop + mobile, theme hiện tại)",
+  "A11y pass (keyboard, focus trap modal)",
+  "Không console.warn/error",
+  "Bundle size không tăng bất thường"
+]
