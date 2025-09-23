@@ -44,6 +44,19 @@ docs = [
   "https://daisyui.com/components/form/"
 ]
 
+# =======================
+# MOCK DỮ LIỆU
+# =======================
+[data.mocks]
+base_url = "https://dummyjson.com"
+
+[data.mocks.endpoints]
+# Users/Auth — lấy từ DummyJSON
+users_list      = "/users?limit={limit}&skip={skip}"
+user_detail     = "/users/{id}"
+
+[user_avatar]
+user_avatar     = "https://i.pravatar.cc/150?u={seed}"
 
 [theme]
 # DaisyUI: gắn data-theme ở <html> hoặc <body>.
