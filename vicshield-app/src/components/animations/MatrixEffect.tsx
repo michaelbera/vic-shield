@@ -66,71 +66,71 @@ export default function MatrixEffect() {
       offCtx.font = `${FONT_SIZE}px monospace`;
       offCtx.textBaseline = "top";
 
-      // --- digital rain vẽ vào offscreen ---
-      dropsRef.current.forEach((drop, i) => {
-        let x = i * FONT_SIZE;
-        let y = drop.y * FONT_SIZE;
+      // // --- digital rain vẽ vào offscreen ---
+      // dropsRef.current.forEach((drop, i) => {
+      //   let x = i * FONT_SIZE;
+      //   let y = drop.y * FONT_SIZE;
 
-        // wave distortion
-        for (const w of wavesRef.current) {
-          const elapsed = now - w.start;
-          if (elapsed > WAVE_DURATION) continue;
-          const radius =
-            (elapsed / WAVE_DURATION) *
-            Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
+      //   // wave distortion
+      //   for (const w of wavesRef.current) {
+      //     const elapsed = now - w.start;
+      //     if (elapsed > WAVE_DURATION) continue;
+      //     const radius =
+      //       (elapsed / WAVE_DURATION) *
+      //       Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
 
-          const dx = x - w.x;
-          const dy = y - w.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (Math.abs(dist - radius) < 40) {
-            const offset = (40 - Math.abs(dist - radius)) * 0.3;
-            x += (dx / dist) * offset;
-            y += (dy / dist) * offset;
-          }
-        }
+      //     const dx = x - w.x;
+      //     const dy = y - w.y;
+      //     const dist = Math.sqrt(dx * dx + dy * dy);
+      //     if (Math.abs(dist - radius) < 40) {
+      //       const offset = (40 - Math.abs(dist - radius)) * 0.3;
+      //       x += (dx / dist) * offset;
+      //       y += (dy / dist) * offset;
+      //     }
+      //   }
 
-        const char = CHARS[Math.floor(Math.random() * CHARS.length)];
-        offCtx.fillStyle = "rgba(180,255,180,0.25)";
-        offCtx.fillText(char, x, y);
+      //   const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+      //   offCtx.fillStyle = "rgba(180,255,180,0.25)";
+      //   offCtx.fillText(char, x, y);
 
-        // trail
-        for (let k = 1; k < 10; k++) {
-          const trailChar = CHARS[Math.floor(Math.random() * CHARS.length)];
-          offCtx.fillStyle = `rgba(180,255,180,${1 - k / 10})`;
+      //   // trail
+      //   for (let k = 1; k < 10; k++) {
+      //     const trailChar = CHARS[Math.floor(Math.random() * CHARS.length)];
+      //     offCtx.fillStyle = `rgba(180,255,180,${1 - k / 10})`;
 
-          let trailX = i * FONT_SIZE;
-          let trailY = (drop.y - k) * FONT_SIZE;
+      //     let trailX = i * FONT_SIZE;
+      //     let trailY = (drop.y - k) * FONT_SIZE;
 
-          // wave distortion cho trail
-          for (const w of wavesRef.current) {
-            const elapsed = now - w.start;
-            if (elapsed > WAVE_DURATION) continue;
-            const radius =
-              (elapsed / WAVE_DURATION) *
-              Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
-            const dx = trailX - w.x;
-            const dy = trailY - w.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (Math.abs(dist - radius) < 40) {
-              const offset = (40 - Math.abs(dist - radius)) * 0.3;
-              trailX += (dx / dist) * offset;
-              trailY += (dy / dist) * offset;
-            }
-          }
+      //     // wave distortion cho trail
+      //     for (const w of wavesRef.current) {
+      //       const elapsed = now - w.start;
+      //       if (elapsed > WAVE_DURATION) continue;
+      //       const radius =
+      //         (elapsed / WAVE_DURATION) *
+      //         Math.sqrt(canvas.width ** 2 + canvas.height ** 2);
+      //       const dx = trailX - w.x;
+      //       const dy = trailY - w.y;
+      //       const dist = Math.sqrt(dx * dx + dy * dy);
+      //       if (Math.abs(dist - radius) < 40) {
+      //         const offset = (40 - Math.abs(dist - radius)) * 0.3;
+      //         trailX += (dx / dist) * offset;
+      //         trailY += (dy / dist) * offset;
+      //       }
+      //     }
 
-          offCtx.fillText(trailChar, trailX, trailY);
-        }
+      //     offCtx.fillText(trailChar, trailX, trailY);
+      //   }
 
-        drop.y += drop.speed * 0.025;
-        if (drop.y * FONT_SIZE > canvas.height) {
-          drop.y = 0;
-        }
-      });
+      //   drop.y += drop.speed * 0.025;
+      //   if (drop.y * FONT_SIZE > canvas.height) {
+      //     drop.y = 0;
+      //   }
+      // });
 
-      // --- copy offscreen lên canvas chính với blur ---
-      ctx.filter = "blur(2px)";
-      ctx.drawImage(offscreen, 0, 0);
-      ctx.filter = "none";
+      // // --- copy offscreen lên canvas chính với blur ---
+      // ctx.filter = "blur(2px)";
+      // ctx.drawImage(offscreen, 0, 0);
+      // ctx.filter = "none";
 
       // --- dots network (không blur) ---
       const dots = dotsRef.current;
