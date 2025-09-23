@@ -9,7 +9,7 @@ import LINKED from "~/statics/images/footer/linkedin.svg";
 
 const Footer: React.FC = () => {
   return (
-    <Container>
+    <Container className="relative z-10">
       <div className="flex flex-col gap-6 md:gap-8 bg-base-300  p-6 md:p-8">
         <div className="flex flex-col gap-4">
           <div className="flex flex-row items-center gap-2">
