@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import OpenAI from "openai";
 import type { KYCData } from "../Page";
+import axios from "axios";
 
 interface VerifyStepProps {
   kycData: KYCData;
@@ -27,63 +28,49 @@ const VerifyStep = ({ kycData, onComplete }: VerifyStepProps) => {
           );
         }
 
-        const openai = new OpenAI({
-          apiKey: apiKey,
-          dangerouslyAllowBrowser: true, // Note: In production, this should be done server-side
-        });
-
         // Convert images to base64
-        const frontImageBase64 = await fileToBase64(kycData.frontImage!);
-        const backImageBase64 = await fileToBase64(kycData.backImage!);
 
         const prompt = `
-Analyze these Vietnamese ID card images and extract the following information:
-1. Full name (Họ và tên)
-2. ID number (Số căn cước công dân)
-3. Date of birth (Ngày sinh)
-4. Place of birth (Nơi sinh)
-5. Verify if this is a valid Vietnamese citizen ID card
+Analyze these ID card images and extract the following information:
+1. Full name
+2. ID number
+3. Date of birth
+5. Verify if this is a valid  ID card
 
 Please respond in JSON format with these fields:
 {
   "name": "extracted full name",
   "idNumber": "extracted ID number",
   "dateOfBirth": "extracted date of birth",
-  "placeOfBirth": "extracted place of birth",
   "isValid": true/false,
   "confidence": "high/medium/low",
   "notes": "any additional observations"
 }
-
-If the document is not a Vietnamese ID card or the images are unclear, set isValid to false and explain in notes.
+If the document is not a ID card or the images are unclear, set isValid to false and explain in notes.
         `;
 
-        const response = await openai.chat.completions.create({
-          model: "gpt-5",
-          messages: [
-            {
-              role: "user",
-              content: [
-                { type: "text", text: prompt },
-                {
-                  type: "image_url",
-                  image_url: {
-                    url: `data:image/jpeg;base64,${frontImageBase64}`,
+        const response = await axios.post(
+          "https://api-ai.primevaults.finance/chat",
+          {
+            model: "gpt-5",
+            messages: [
+              {
+                role: "user",
+                content: [
+                  { type: "text", text: prompt },
+                  {
+                    type: "image_url",
+                    image_url: {
+                      url: `https://idscan.net/wp-content/uploads/arizona-ai-generated-fake-ids.jpg`,
+                    },
                   },
-                },
-                {
-                  type: "image_url",
-                  image_url: {
-                    url: `data:image/jpeg;base64,${backImageBase64}`,
-                  },
-                },
-              ],
-            },
-          ],
-          max_tokens: 500,
-        });
+                ],
+              },
+            ],
+          }
+        );
 
-        const result = response.choices[0]?.message?.content;
+        const result = response.data.answer[0]?.message?.content;
         if (result) {
           try {
             const parsedResult = JSON.parse(result);

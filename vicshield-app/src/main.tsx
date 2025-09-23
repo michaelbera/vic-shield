@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <DynamicContextProvider
         settings={{
-          environmentId: "a5204dbb-9392-401d-9857-c1370cf3d6b6",
+          environmentId: "fe25ede5-d350-4bea-ab45-8e903c5a3ccc",
           walletConnectors: [EthereumWalletConnectors],
         }}
       >
