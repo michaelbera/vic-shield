@@ -13,29 +13,19 @@ import * as fs from 'fs/promises';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('upload')
+  @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
-  async upload(@UploadedFile() file: Express.Multer.File) {
-    if (!file) throw new BadRequestException('No file uploaded');
-    try {
-      const uploaded = await this.appService.uploadToOpenAI(
-        file.path,
-        file.originalname,
-        file.mimetype,
-      );
+  async uploadAndAnalyze(@UploadedFile() file: Express.Multer.File) {
+    // file.path là đường dẫn tạm (multer disk storage)
+    const { analysis, file: uploaded } = await this.appService.uploadAndAnalyze(
+      file.path,
+      file.originalname,
+      file.mimetype,
+    );
+    return {
+      fileId: uploaded.id,
 
-      return {
-        fileId: uploaded.id,
-        bytes: uploaded.bytes,
-        createdAt: uploaded.created_at,
-        filename: uploaded.filename,
-        mimeType: uploaded.mime_type,
-      };
-    } finally {
-      // dọn file tạm
-      if (file?.path) {
-        await fs.unlink(file.path).catch(() => {});
-      }
-    }
+      analysis,
+    };
   }
 }

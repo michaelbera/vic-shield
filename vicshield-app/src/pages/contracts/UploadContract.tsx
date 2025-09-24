@@ -14,7 +14,17 @@ export default function UploadFile() {
   const [msg, setMsg] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const resetAll = () => {
+    setFile(null);
+    setProgress(0);
+    setStatus("idle");
+    setMsg("");
+    // Quan trọng: reset giá trị input để lần sau chọn cùng file vẫn trigger onChange
+    if (inputRef.current) inputRef.current.value = "";
+  };
+
   const startUpload = async (f: File) => {
+    if (status === "uploading") return; // tránh double-trigger
     setFile(f);
     setStatus("uploading");
     setMsg("");
@@ -23,8 +33,8 @@ export default function UploadFile() {
     try {
       const form = new FormData();
       form.append("file", f);
-      // purpose thường dùng: "assistants" (Files API)
       form.append("purpose", "assistants");
+
       const res = await axios.post(
         `${import.meta.env.VITE_VICSHIELD_API_URL}/upload`,
         form,
@@ -43,12 +53,17 @@ export default function UploadFile() {
     } catch (e: any) {
       setStatus("error");
       setMsg(e?.response?.data?.error ?? e?.message ?? "Upload failed");
+    } finally {
+      // Sau khi xử lý, luôn clear input để lần sau chọn cùng file vẫn nhận
+      if (inputRef.current) inputRef.current.value = "";
     }
   };
 
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (f) startUpload(f);
+    // Clear ngay tại đây cũng được (double safety)
+    e.currentTarget.value = "";
   };
 
   const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
@@ -62,15 +77,7 @@ export default function UploadFile() {
     <div className="w-full p-6 bg-base-100 rounded-xl shadow-lg mt-4">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold">Upload file</h2>
-        <button
-          className="btn btn-xs btn-ghost"
-          onClick={() => {
-            setFile(null);
-            setProgress(0);
-            setStatus("idle");
-            setMsg("");
-          }}
-        >
+        <button className="btn btn-xs btn-ghost" onClick={resetAll}>
           ✕
         </button>
       </div>
@@ -88,8 +95,13 @@ export default function UploadFile() {
           "border-2 border-dashed",
           dragOver ? "border-primary bg-primary/5" : "border-base-300",
           "hover:border-primary",
+          status === "uploading" ? "pointer-events-none opacity-70" : "",
         ].join(" ")}
-        onClick={() => inputRef.current?.click()}
+        onClick={() => {
+          // Clear trước khi mở dialog để chọn lại cùng file vẫn kích hoạt onChange
+          if (inputRef.current) inputRef.current.value = "";
+          inputRef.current?.click();
+        }}
       >
         <div className="flex flex-col items-center pointer-events-none">
           <p className="mt-2 text-sm">
@@ -120,15 +132,7 @@ export default function UploadFile() {
               {(file.size / 1024 / 1024).toFixed(2)} MB
             </p>
           </div>
-          <button
-            className="btn btn-xs btn-ghost"
-            onClick={() => {
-              setFile(null);
-              setProgress(0);
-              setStatus("idle");
-              setMsg("");
-            }}
-          >
+          <button className="btn btn-xs btn-ghost" onClick={resetAll}>
             Remove
           </button>
         </div>
@@ -157,29 +161,17 @@ export default function UploadFile() {
 
       {/* Actions */}
       <div className="mt-6 flex justify-between">
-        <button
-          className="btn btn-ghost"
-          onClick={() => {
-            setFile(null);
-            setProgress(0);
-            setStatus("idle");
-            setMsg("");
-          }}
-        >
+        <button className="btn btn-ghost" onClick={resetAll}>
           Cancel
         </button>
         <button
           className="btn btn-primary"
           disabled={status !== "done"}
           onClick={() => {
-            // Reset the upload state to allow uploading another file
-            setFile(null);
-            setProgress(0);
-            setStatus("idle");
-            setMsg("");
-            
-            // Show success message with next steps
-            alert("File uploaded successfully! You can now upload another file or browse your contracts below.");
+            resetAll();
+            alert(
+              "File uploaded successfully! You can now upload another file or browse your contracts below."
+            );
           }}
         >
           Continue
