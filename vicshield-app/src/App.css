@@ -96,3 +96,27 @@ body {
     100%
   );
 }
+
+/* Contract List Enhancements */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom progress bar styles */
+.progress-primary::-webkit-progress-value {
+  background: oklch(var(--p));
+}
+
+.progress-primary::-moz-progress-bar {
+  background: oklch(var(--p));
+}
