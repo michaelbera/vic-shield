@@ -7,11 +7,11 @@
   default: true;
   --color-primary: #0a8fdc;
   --color-secondary: #6b7280;
-  --color-base-300: #111827;
+  --color-base-300: #111324;
   --color-base-200: #1c1c28;
-  --radius-field: 1rem;
+  --color-base-100: #101827;
   --size-field: 0.3125rem;
-  --radius-box: 2rem;
+
 }
 
 
