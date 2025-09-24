@@ -7,7 +7,6 @@ import {
 import HomePage from "./pages/home/Page";
 import "./App.css";
 import Contracts from "./pages/contracts/Page";
-import ContractsList from "./pages/contracts/ListContract";
 import KYCPage from "./pages/kyc/Page";
 import Login from "./pages/login/Page";
 import Layout from "./components/Layout";
@@ -37,14 +36,6 @@ const router = createBrowserRouter([
           <ProtectedRoute requireAuth={true} requireKyc={true}>
             <Contracts />
           </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/dev-contracts",
-        element: (
-          <div className="container mx-auto px-4 py-8">
-            <ContractsList />
-          </div>
         ),
       },
       {
