@@ -1,17 +1,15 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import UploadFile from "./UploadContract";
 
 const Contracts = () => {
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    // Redirect to create page since this is the main contracts entry point
-    navigate('/contracts/create', { replace: true });
-  }, [navigate]);
+
+  useEffect(() => {}, [navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="loading loading-spinner loading-lg"></div>
+      <UploadFile />
     </div>
   );
 };
