@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       {
         path: "/contracts",
         element: (
-          <ProtectedRoute requireAuth={false} requireKyc={false}>
+          <ProtectedRoute requireAuth={true} requireKyc={true}>
             <Contracts />
           </ProtectedRoute>
         ),
