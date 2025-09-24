@@ -19,19 +19,21 @@ export default function UploadFile() {
     setStatus("uploading");
     setMsg("");
     setProgress(0);
+  };
 
+  const onNext = async () => {
     try {
       const form = new FormData();
-      form.append("file", f);
+      form.append("file", file as any);
       // purpose thường dùng: "assistants" (Files API)
       form.append("purpose", "assistants");
-
       const res = await axios.post(
-        `${import.meta.env.VITE_VICSHIELD_API_URL}/api/openai/upload`,
+        `${import.meta.env.VITE_VICSHIELD_API_URL}/upload`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (evt) => {
+            console.log("???");
             if (!evt.total) return;
             const p = Math.round((evt.loaded * 100) / evt.total);
             setProgress(p);
@@ -40,7 +42,7 @@ export default function UploadFile() {
       );
 
       setStatus("done");
-      setMsg(`Uploaded: file_id=${res.data?.id ?? "unknown"}`);
+      setMsg(`Uploaded: file_id=${res.data?.fileId ?? "unknown"}`);
     } catch (e: any) {
       setStatus("error");
       setMsg(e?.response?.data?.error ?? e?.message ?? "Upload failed");
@@ -60,7 +62,7 @@ export default function UploadFile() {
   };
 
   return (
-    <div className="w-full max-w-xl p-6 bg-base-100 rounded-xl shadow-lg">
+    <div className="w-full p-6 bg-base-100 rounded-xl shadow-lg mt-4">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold">Upload file</h2>
         <button
@@ -93,11 +95,6 @@ export default function UploadFile() {
         onClick={() => inputRef.current?.click()}
       >
         <div className="flex flex-col items-center pointer-events-none">
-          <span className="avatar placeholder">
-            <div className="w-10 rounded-full bg-base-200">
-              <span className="text-xl">⬆️</span>
-            </div>
-          </span>
           <p className="mt-2 text-sm">
             Drag & Drop file here or{" "}
             <span className="text-primary font-medium underline">
