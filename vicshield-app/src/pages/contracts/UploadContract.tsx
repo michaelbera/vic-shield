@@ -19,12 +19,10 @@ export default function UploadFile() {
     setStatus("uploading");
     setMsg("");
     setProgress(0);
-  };
 
-  const onNext = async () => {
     try {
       const form = new FormData();
-      form.append("file", file as any);
+      form.append("file", f);
       // purpose thường dùng: "assistants" (Files API)
       form.append("purpose", "assistants");
       const res = await axios.post(
@@ -33,7 +31,6 @@ export default function UploadFile() {
         {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (evt) => {
-            console.log("???");
             if (!evt.total) return;
             const p = Math.round((evt.loaded * 100) / evt.total);
             setProgress(p);
@@ -174,9 +171,18 @@ export default function UploadFile() {
         <button
           className="btn btn-primary"
           disabled={status !== "done"}
-          onClick={() => alert("Next step")}
+          onClick={() => {
+            // Reset the upload state to allow uploading another file
+            setFile(null);
+            setProgress(0);
+            setStatus("idle");
+            setMsg("");
+            
+            // Show success message with next steps
+            alert("File uploaded successfully! You can now upload another file or browse your contracts below.");
+          }}
         >
-          Next
+          Continue
         </button>
       </div>
     </div>
