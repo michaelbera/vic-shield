@@ -26,7 +26,7 @@ export class FilesController {
 
   @Get(':id')
   async get(@Param('id') id: string, @Res() res: Response) {
-    const f = await this.svc.get(id);
+    const f = await this.svc.getByHash(id);
     res.setHeader('Content-Type', f.contentType || 'application/octet-stream');
     res.send(Buffer.from(f.dataBase64, 'base64'));
   }

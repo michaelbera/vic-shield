@@ -5,8 +5,6 @@ import Features from "./Features";
 import Pricing from "./Pricing";
 import Roadmap from "./Roadmap";
 import Solutions from "./Solutions";
-import UploadFile from "~/components/UploadFile";
-
 export default function HomePage() {
   return (
     <div className="relative w-full z-0">
@@ -14,7 +12,6 @@ export default function HomePage() {
         <MatrixEffect />
       </div>
       <div className="relative w-full flex flex-col z-10">
-        <UploadFile />
         <Banner />
         <Characteristics />
         <Solutions />

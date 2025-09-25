@@ -78,7 +78,6 @@ export default function UploadFile({
 
       <input
         type="file"
-        accept="image/*"
         className="absolute inset-0 opacity-0 cursor-pointer"
         onChange={onInput}
       />

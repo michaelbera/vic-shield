@@ -11,6 +11,7 @@ export class UsersService {
     @InjectModel(UserEntity.name) private u: Model<UserDoc>,
     private readonly f: FilesService,
   ) {}
+
   async getUser(address: string) {
     const user = await this.u
       .findOne({ address: address.toLowerCase() })
@@ -18,6 +19,7 @@ export class UsersService {
     if (user) return user;
     return { address: address.toLowerCase(), isValid: false };
   }
+
   async kyc(createUserDto: { address: string; fileHash: string }) {
     const prompt = `
 Analyze these ID card images and extract the following information:
@@ -38,7 +40,7 @@ Please respond in JSON format with these fields:
 If the document is not a ID card or the images are unclear, set isValid to false and explain in notes.
         `;
 
-    const file = await this.f.get(createUserDto.fileHash);
+    const file = await this.f.getByHash(createUserDto.fileHash);
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const response = await openai.chat.completions.create({
       model: 'gpt-5',
@@ -58,7 +60,6 @@ If the document is not a ID card or the images are unclear, set isValid to false
       ],
     });
     const data = JSON.parse(response.choices[0].message.content);
-    console.log('data', data);
     await this.u.findOneAndUpdate(
       { address: createUserDto.address.toLowerCase() },
       {

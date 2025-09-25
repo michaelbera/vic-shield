@@ -10,6 +10,7 @@ import Contracts from "./pages/contracts/Page";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./providers/AuthProvider";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import ContractDetails from "./pages/contracts/ContractDetails";
 
 const router = createBrowserRouter([
   {
@@ -22,17 +23,21 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <ProtectedRoute requireAuth={false}>
-            <HomePage />
-          </ProtectedRoute>
-        ),
+        element: <HomePage />,
       },
       {
         path: "/contracts",
         element: (
           <ProtectedRoute requireAuth={true} requireKyc={true}>
             <Contracts />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/contracts/:hash",
+        element: (
+          <ProtectedRoute requireAuth={true} requireKyc={true}>
+            <ContractDetails />
           </ProtectedRoute>
         ),
       },
