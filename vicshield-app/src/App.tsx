@@ -7,8 +7,6 @@ import {
 import HomePage from "./pages/home/Page";
 import "./App.css";
 import Contracts from "./pages/contracts/Page";
-import KYCPage from "./pages/kyc/Page";
-import Login from "./pages/login/Page";
 import Layout from "./components/Layout";
 import { AuthProvider } from "./providers/AuthProvider";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -38,22 +36,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      {
-        path: "/kyc",
-        element: (
-          <ProtectedRoute requireAuth={true} requireKyc={false}>
-            <KYCPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/login",
-        element: (
-          <ProtectedRoute requireAuth={false}>
-            <Login />
-          </ProtectedRoute>
-        ),
-      },
+
       { path: "*", element: <Navigate to="/" /> },
     ],
   },

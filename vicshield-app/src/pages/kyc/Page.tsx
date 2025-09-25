@@ -1,73 +1,122 @@
-import { useState } from "react";
-import Container from "~/components/UI/Container";
-import UploadStep from "./components/UploadStep";
-import VerifyStep from "./components/VerifyStep";
-import SuccessStep from "./components/SuccessStep";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import DataDisplay from "~/components/DataDisplay";
+import UploadFile from "~/components/UploadFile";
+import useUser from "~/hooks/useUser";
 
-export interface KYCData {
-  frontImage: File | null;
-  backImage: File | null;
-  country: string;
-  extractedInfo: {
-    name: string;
-    idNumber: string;
-    dateOfBirth: string;
-    placeOfBirth: string;
-    isValid: boolean;
-  } | null;
-}
+const KYC = () => {
+  const [country, setCountry] = useState<string>("");
+  const [loadingCountry, setLoadingCountry] = useState(true);
+  const [file, setFile] = useState("");
+  const account = useDynamicContext();
+  const [kycData, setKycData] = useState<any>();
+  const user = useUser();
 
-const KYCPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [kycData, setKycData] = useState<KYCData>({
-    frontImage: null,
-    backImage: null,
-    country: "",
-    extractedInfo: null,
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("https://api.country.is");
+        const data = await res.json();
+        setCountry(data.country || "Unknown");
+      } catch {
+        setCountry("Unknown");
+      } finally {
+        setLoadingCountry(false);
+      }
+    })();
+  }, []);
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const res = await axios.patch(
+        `${import.meta.env.VITE_VICSHIELD_API_URL}/users/kyc`,
+        {
+          address: account.primaryWallet?.address,
+          fileHash: file,
+        }
+      );
+      console.log("KYC response:", res.data);
+      setKycData(res.data);
+      return res.data;
+    },
   });
 
-  const handleStepComplete = (stepData: Partial<KYCData>) => {
-    setKycData(prev => ({ ...prev, ...stepData }));
-    setCurrentStep(prev => prev + 1);
-  };
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return <UploadStep onComplete={handleStepComplete} />;
-      case 2:
-        return <VerifyStep kycData={kycData} onComplete={handleStepComplete} />;
-      case 3:
-        return <SuccessStep />;
-      default:
-        return <UploadStep onComplete={handleStepComplete} />;
-    }
-  };
-
   return (
-    <Container>
-      <section className="flex flex-col px-6 md:px-8 gap-8 md:gap-16 py-8 md:py-16">
-        <div className="page-title flex flex-col gap-4 md:gap-6 items-center text-center">
-          <p>Identity Verification</p>
-          <span>Complete your KYC process to continue with contract signing</span>
+    <div className="card bg-base-300 p-6 md:p-8">
+      <div className="flex flex-col gap-6">
+        <div className="text-center">
+          <h3 className="text-xl font-bold mb-2">Upload Identity Documents</h3>
+          <p className="text-base-content/70">
+            Please upload clear photos of the front and back of your Vietnamese
+            ID card
+          </p>
         </div>
 
-        {/* Progress indicator */}
-        <div className="w-full max-w-lg mx-auto">
-          <ul className="steps steps-horizontal w-full">
-            <li className={`step ${currentStep >= 1 ? 'step-primary' : ''}`}>Upload Documents</li>
-            <li className={`step ${currentStep >= 2 ? 'step-primary' : ''}`}>Verify Identity</li>
-            <li className={`step ${currentStep >= 3 ? 'step-primary' : ''}`}>Complete</li>
-          </ul>
+        <div className="alert alert-info">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="stroke-current shrink-0 w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>
+            {loadingCountry
+              ? "Detecting your location..."
+              : `Detected country: ${country}`}
+          </span>
         </div>
-
-        {/* Step content */}
-        <div className="w-full max-w-2xl mx-auto">
-          {renderStep()}
-        </div>
-      </section>
-    </Container>
+        <UploadFile onChange={setFile} />
+        {kycData ? (
+          <>
+            <DataDisplay
+              data={{
+                name: kycData.name,
+                ID: kycData.idNumber,
+                "Date of Birth": kycData.dateOfBirth,
+                country: kycData.country,
+                "Confidence level": kycData.confidence,
+                "Document Valid": kycData.isValid ? "Yes" : "No",
+              }}
+            />
+            {kycData.isValid ? (
+              <button className="btn btn-primary" onClick={() => user.refetch}>
+                Confirm
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary"
+                onClick={() => location.reload()}
+              >
+                Retry
+              </button>
+            )}
+          </>
+        ) : (
+          <button
+            className="btn btn-primary"
+            disabled={!file || mutation.isPending}
+            onClick={() => mutation.mutateAsync()}
+          >
+            {mutation.isPending
+              ? "Verifying by AI.."
+              : "Submit for Verification"}
+            {mutation.isPending && (
+              <span className="loading loading-spinner loading-sm ml-2"></span>
+            )}
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 
-export default KYCPage;
+export default KYC;

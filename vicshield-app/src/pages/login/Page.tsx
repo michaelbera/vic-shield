@@ -1,25 +1,7 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
-import { useAuthStore } from "~/store/authStore";
 import Container from "~/components/UI/Container";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated, isKycCompleted } = useAuthStore();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (isKycCompleted) {
-        // User has completed KYC, redirect to contracts
-        navigate("/contracts");
-      } else {
-        // User hasn't completed KYC, redirect to KYC page
-        navigate("/kyc");
-      }
-    }
-  }, [isAuthenticated, isKycCompleted, navigate]);
-
   return (
     <Container>
       <section className="flex flex-col items-center justify-center min-h-[60vh] px-6 md:px-8 gap-8 py-8 md:py-16">

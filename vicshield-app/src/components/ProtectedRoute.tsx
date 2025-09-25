@@ -1,5 +1,6 @@
-import { Navigate } from 'react-router-dom';
-import { useAuthStore } from '~/store/authStore';
+import useUser from "~/hooks/useUser";
+import KYC from "~/pages/kyc/Page";
+import Login from "~/pages/login/Page";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -7,23 +8,10 @@ interface ProtectedRouteProps {
   requireKyc?: boolean;
 }
 
-export const ProtectedRoute = ({ 
-  children, 
-  requireAuth = true, 
-  requireKyc = false 
-}: ProtectedRouteProps) => {
-  const { isAuthenticated, isKycCompleted } = useAuthStore();
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const user = useUser();
+  if (!user.data) return <Login />;
+  if (!user.data.isValid) return <KYC />;
 
-  // If authentication is required but user is not authenticated
-  if (requireAuth && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // If KYC is required but user hasn't completed KYC
-  if (requireKyc && !isKycCompleted) {
-    return <Navigate to="/kyc" replace />;
-  }
-
-  // If user is authenticated and KYC requirements are met
   return <>{children}</>;
 };
