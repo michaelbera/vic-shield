@@ -3,11 +3,14 @@ import axios from "axios";
 
 export default function UploadFile({
   onChange,
+  text = "Click to upload front image",
 }: {
   onChange?: (hashed: string) => void;
+  text?: string;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [hashed, setHashed] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const preview = useMemo(
     () => (file ? URL.createObjectURL(file) : ""),
@@ -25,6 +28,7 @@ export default function UploadFile({
     form.append("file", f);
     form.append("purpose", "assistants");
 
+    setLoading(true);
     const res = await axios.post(
       `${import.meta.env.VITE_VICSHIELD_API_URL}/files/upload`,
       form,
@@ -34,6 +38,7 @@ export default function UploadFile({
     );
     setHashed(res.data?.hash ?? "");
     onChange?.(res.data?.hash ?? "");
+    setLoading(false);
   };
 
   const onInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +49,13 @@ export default function UploadFile({
     }
   };
 
+  const isImage = file
+    ? ["image/png", "image/jpeg", "image/jpg"].includes(file.type)
+    : false;
+
   return (
-    <div className="relative border-2 border-dashed border-base-content/30 rounded-lg p-6 text-center hover:border-primary/50 transition-colors bg-base-100">
-      {preview ? (
+    <div className="relative border-2 border-dashed border-base-content/30 rounded-lg p-6 text-center hover:border-primary/50 transition-colors bg-base-100 w-full">
+      {preview && isImage ? (
         <div className="flex flex-col gap-2">
           <img
             src={preview}
@@ -57,22 +66,24 @@ export default function UploadFile({
         </div>
       ) : (
         <div className="flex flex-col gap-2 pointer-events-none select-none">
-          <svg
-            className="w-12 h-12 mx-auto text-base-content/50"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-          <p className="text-sm text-base-content/70">
-            Click to upload front image
-          </p>
+          {loading ? (
+            <div className="w-12 h-12 mx-auto border-4 border-dashed rounded-full animate-spin border-primary/50"></div>
+          ) : (
+            <svg
+              className="w-12 h-12 mx-auto text-base-content/50"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+          )}
+          <p className="text-sm text-base-content/70">{text}</p>
         </div>
       )}
 

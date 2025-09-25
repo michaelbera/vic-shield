@@ -10,15 +10,8 @@ const Contracts = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <UploadFile onChange={onUpload} />
-      <button
-        className="btn btn-primary mt-4"
-        onClick={() => navigate("/contracts/new")}
-      >
-        New Contract
-      </button>
-
+    <div className="min-h-screen flex flex-col mt-8">
+      <UploadFile onChange={onUpload} text="Upload Contract Document" />
       <ContractsList />
     </div>
   );

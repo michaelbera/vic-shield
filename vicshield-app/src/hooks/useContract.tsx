@@ -16,3 +16,17 @@ const useContract = (hash: string) => {
 };
 
 export default useContract;
+
+export const useContracts = () => {
+  const data = useQuery({
+    queryKey: ["contracts"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_VICSHIELD_API_URL}/contracts`
+      );
+      return res.json();
+    },
+  });
+
+  return data;
+};

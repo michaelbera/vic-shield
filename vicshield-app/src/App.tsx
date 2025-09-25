@@ -11,6 +11,7 @@ import Layout from "./components/Layout";
 import { AuthProvider } from "./providers/AuthProvider";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import ContractDetails from "./pages/contracts/ContractDetails";
+import ModelLoading from "./components/loading/ModelLoading";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+      <ModelLoading />
       <RouterProvider router={router} />
     </>
   );

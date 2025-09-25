@@ -13,7 +13,7 @@ export default function PDFViewer({ hash }: { hash: string }) {
   return (
     <div style={{ height: "100vh" }}>
       <Viewer
-        fileUrl={`${import.meta.env.VITE_VICSHIELD_API_URL}/files/${hash}`} // đường dẫn file pdf (có thể là url hoặc blob)
+        fileUrl={`${import.meta.env.VITE_VICSHIELD_API_URL}/files/${hash}`}
         plugins={[defaultLayoutPluginInstance]}
       />
     </div>

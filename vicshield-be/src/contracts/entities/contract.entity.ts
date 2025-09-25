@@ -12,5 +12,6 @@ export class ContractEntity {
   @Prop() score: number;
   @Prop() signers: number[];
   @Prop() aiContent: string;
+  @Prop() signed: string[];
 }
 export const ContractSchema = SchemaFactory.createForClass(ContractEntity);

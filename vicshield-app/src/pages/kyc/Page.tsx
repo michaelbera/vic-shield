@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import DataDisplay from "~/components/DataDisplay";
+import { useModelLoading } from "~/components/loading/ModelLoading";
 import UploadFile from "~/components/UploadFile";
 import useUser from "~/hooks/useUser";
 
@@ -13,6 +14,7 @@ const KYC = () => {
   const account = useDynamicContext();
   const [kycData, setKycData] = useState<any>();
   const user = useUser();
+  const { open, close } = useModelLoading();
 
   useEffect(() => {
     (async () => {
@@ -30,6 +32,7 @@ const KYC = () => {
 
   const mutation = useMutation({
     mutationFn: async () => {
+      open("Verifying by VicAI...");
       const res = await axios.patch(
         `${import.meta.env.VITE_VICSHIELD_API_URL}/users/kyc`,
         {
@@ -37,9 +40,11 @@ const KYC = () => {
           fileHash: file,
         }
       );
-      console.log("KYC response:", res.data);
       setKycData(res.data);
       return res.data;
+    },
+    onSettled: () => {
+      close();
     },
   });
 
@@ -88,7 +93,10 @@ const KYC = () => {
               }}
             />
             {kycData.isValid ? (
-              <button className="btn btn-primary" onClick={() => user.refetch}>
+              <button
+                className="btn btn-primary"
+                onClick={() => user.refetch()}
+              >
                 Confirm
               </button>
             ) : (

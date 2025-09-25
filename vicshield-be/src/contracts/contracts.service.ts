@@ -16,6 +16,16 @@ export class ContractsService {
     apiKey: process.env.OPENAI_API_KEY,
   });
 
+  getAll() {
+    return this.ct.find().lean();
+  }
+
+  signContract(hash: string, address: string) {
+    return this.ct
+      .findOneAndUpdate({ hash }, { $addToSet: { signers: address } })
+      .lean();
+  }
+
   private extractText(res: any): string {
     if (res?.output_text && typeof res.output_text === 'string')
       return res.output_text;
@@ -39,7 +49,6 @@ export class ContractsService {
   async syncContracts(hash: string) {
     const file = await this.f.getByHash(hash);
     const contract = await this.ct.findOne({ hash });
-    console.log('contract', contract);
 
     const prompt = [
       'Bạn là một luật sư hợp đồng thương mại. Nhiệm vụ:',
@@ -52,8 +61,11 @@ export class ContractsService {
         {
           title: 'string',
           description: 'string (<100 từ)',
-          score: 'number (0-100) độ an toàn hợp đồng',
-          content: 'markdown | (Rủi ro & điểm cần lưu ý)',
+          score:
+            'number (0-100) độ an toàn hợp đồng. chấm điểm thật công tâm, trừ điểm dựa trên các rủi ro cho cả A và B, dựa trên các hợp đồng tương tự, trừ điểm khi thiếu các thông tin cần thiết, Rủi ro & điểm cần lưu ý',
+
+          content:
+            'markdown (Rủi ro & điểm cần lưu ý, mỗi ý rủi ro tự đánh giá priority cao/medium/low). ',
         },
         null,
         0,
@@ -76,10 +88,8 @@ export class ContractsService {
 
     // @ts-ignore
     const text = this.extractText(res);
-    console.log('text', text);
 
     const data = JSON.parse(text);
-    console.log('data', data);
     contract.aiContent = data.content;
     contract.title = data.title;
     contract.description = data.description;
