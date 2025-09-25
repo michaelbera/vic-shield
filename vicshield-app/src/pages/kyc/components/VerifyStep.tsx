@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import OpenAI from "openai";
 import type { KYCData } from "../Page";
 import axios from "axios";
 
@@ -119,18 +118,6 @@ If the document is not a ID card or the images are unclear, set isValid to false
       verifyDocuments();
     }
   }, [kycData]);
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const result = reader.result as string;
-        resolve(result.split(",")[1]); // Remove data:image/jpeg;base64, prefix
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
 
   const handleConfirm = () => {
     onComplete({ extractedInfo });
