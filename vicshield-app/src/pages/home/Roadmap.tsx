@@ -89,7 +89,7 @@ const SuffixElement: React.FC<SuffixElementProps> = ({
 
 const ROADMAP = [
   {
-    title: "Q4-2023",
+    title: "Q4-2025",
     desc: [
       "Signature & Contract Management ",
       "Version Management & Tracking",
@@ -107,7 +107,7 @@ const ROADMAP = [
     configs: { w: 15, h: 200 },
   },
   {
-    title: "Q1-2024",
+    title: "Q1-2026",
     desc: [
       "Ramper Support & eKYC Onboarding",
       "Fault Detection",
@@ -124,7 +124,7 @@ const ROADMAP = [
     configs: { w: 15, h: 200 },
   },
   {
-    title: "Q2-2024",
+    title: "Q2-2026",
     desc: [
       "VicShield ver 2.0",
       "VicShield for Business",
@@ -142,7 +142,7 @@ const ROADMAP = [
     configs: { w: 25, h: 560 },
   },
   {
-    title: "Q3-2024",
+    title: "Q3-2026",
     desc: [
       "Shield as-a- Service Platform live",
       "Transaction Management",
@@ -168,7 +168,7 @@ const ROADMAP = [
     configs: { w: 25, h: 560 },
   },
   {
-    title: "Q4-2024",
+    title: "Q4-2026",
     desc: [
       "Decentralized Storage Platform",
       "VicShield Network ",

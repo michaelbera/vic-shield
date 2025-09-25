@@ -5,7 +5,7 @@ const Solutions: React.FC = () => {
   return (
     <Container>
       <section className="grid grid-cols-1 md:grid-cols-2 px-6 md:px-8 gap-8 md:gap-16">
-        <div className="page-title col-span-full flex flex-col items-center">
+        <div className="page-title col-span-full flex flex-col items-center ">
           <p>Solutions</p>
           <span className="text-center w-full md:w-9/12">
             Our platform strives to revolutionize digital signature security by
@@ -25,7 +25,7 @@ const Solutions: React.FC = () => {
           {/* item 1 */}
           <div
             tabIndex={0}
-            className="collapse rounded-none border-b border-secondary"
+            className="collapse collapse-open rounded-none border-b border-secondary"
           >
             <div className="collapse-title font-semibold text-lg md:text-3xl uppercase">
               VICSHIELD
@@ -46,10 +46,10 @@ const Solutions: React.FC = () => {
               Shield as a service
             </div>
             <div className="collapse-content text-sm">
-              Provide comprehensive digital signature and contract management
-              solution with non-fungible data and transparent processes for
-              individuals and businesses based on subscription model billed
-              monthly and annually
+              A highly adaptable SDK of contract management solution. Users will
+              have the flexibility to customize the package partially or
+              entirely and can pay fees with both a base rate and consumption
+              model
             </div>
           </div>
           {/* item 3 */}
@@ -58,10 +58,13 @@ const Solutions: React.FC = () => {
               Scalability
             </div>
             <div className="collapse-content text-sm">
-              Provide comprehensive digital signature and contract management
-              solution with non-fungible data and transparent processes for
-              individuals and businesses based on subscription model billed
-              monthly and annually
+              A decentralized protocol leveraging blockchain technologies to
+              improve security, transparency, and data availability. The network
+              is powered by a decentralized community of contributors, providing
+              multisig security and transparency services in exchange for
+              incentives from VicShield. $VST is the utility token facilitating
+              provider and end-user interactions, maintaining data availability
+              and infrastructure efficiency.
             </div>
           </div>
         </div>

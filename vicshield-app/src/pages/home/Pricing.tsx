@@ -48,7 +48,7 @@ const PRICES = [
       "Tailor-made approval layers",
     ],
     icons: [CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK, CHECK],
-    price: -1,
+    price: 0,
     label: "",
   },
 ];
@@ -86,9 +86,8 @@ const Pricing: React.FC = () => {
                   ))}
                 </div>
               </div>
-
               {p.price > 0 && (
-                <Fragment>
+                <>
                   <div className="flex flex-col gap-2 px-4 md:px-6">
                     <p className="text-3xl md:text-6xl font-bold">
                       ${p.price}
@@ -98,6 +97,17 @@ const Pricing: React.FC = () => {
                     </p>
                     <span className="text-xs text-secondary">{p.label}</span>
                   </div>
+                  <div
+                    className="flex flex-col items-center justify-center py-3 cursor-pointer"
+                    style={{ background: "#38B2AC" }}
+                  >
+                    Buy
+                  </div>
+                </>
+              )}
+
+              {!p.price && (
+                <Fragment>
                   <div
                     className="flex flex-col items-center justify-center py-3 cursor-pointer"
                     style={{ background: "#38B2AC" }}
