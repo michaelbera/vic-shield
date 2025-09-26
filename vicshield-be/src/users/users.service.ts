@@ -33,7 +33,6 @@ Please respond in JSON format with these fields:
   "name": "extracted full name",
   "idNumber": "extracted ID number",
   "dateOfBirth": "extracted date of birth",
-  "isValid": true/false,
   "country": "Country of the ID card",
   "confidence": "high/medium/low",
 }
@@ -64,7 +63,7 @@ If the document is not a ID card or the images are unclear, set isValid to false
       { address: createUserDto.address.toLowerCase() },
       {
         address: createUserDto.address.toLowerCase(),
-        isValid: data.isValid,
+        isValid: data.confidence === 'high' && data.name && data.idNumber,
       },
       { upsert: true, new: true },
     );
