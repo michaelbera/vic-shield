@@ -1,10 +1,10 @@
-import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import axios from "axios";
-import useContract from "~/hooks/useContract";
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import axios from 'axios';
+import useContract from '~/hooks/useContract';
 
 const SignContract = ({
   hash,
-  size = "small",
+  size = 'small',
 }: {
   hash: string;
   size?: string;
@@ -15,7 +15,7 @@ const SignContract = ({
   const onSign = async (e: any) => {
     e.stopPropagation();
     if (!primaryWallet) {
-      alert("Please connect your wallet first.");
+      alert('Please connect your wallet first.');
       return;
     }
 
@@ -25,23 +25,23 @@ const SignContract = ({
       {
         signer: primaryWallet.address,
         signature,
-      }
+      },
     );
     contract.refetch();
   };
 
   const isSigned = contract.data?.signers?.includes(
-    primaryWallet?.address || ""
+    primaryWallet?.address || '',
   );
   if (isSigned) {
-    return <div className="badge badge-success">You have signed</div>;
+    return <div className="badge badge-success"> signed</div>;
   }
   return (
     <button
-      className={`btn btn-primary ${size === "small" ? "btn-sm" : "btn-lg"}`}
+      className={`btn btn-primary ${size === 'small' ? 'btn-sm' : 'btn-lg'}`}
       onClick={onSign}
     >
-      Sign Contract{" "}
+      Sign Contract{' '}
     </button>
   );
 };
