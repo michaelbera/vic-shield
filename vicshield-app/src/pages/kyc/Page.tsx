@@ -37,8 +37,7 @@ const KYC = () => {
         `${import.meta.env.VITE_VICSHIELD_API_URL}/users/kyc`,
         {
           address: account.primaryWallet?.address,
-          fileHash:
-            '2137d9d98462d8b5e272cc502120f61d279f2118a740b61a0caf4146589ae01e',
+          fileHash: file,
         },
       );
       setKycData(res.data);
