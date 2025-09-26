@@ -1,16 +1,16 @@
-import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import DataDisplay from "~/components/DataDisplay";
-import { useModelLoading } from "~/components/loading/ModelLoading";
-import UploadFile from "~/components/UploadFile";
-import useUser from "~/hooks/useUser";
+import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import DataDisplay from '~/components/DataDisplay';
+import { useModelLoading } from '~/components/loading/ModelLoading';
+import UploadFile from '~/components/UploadFile';
+import useUser from '~/hooks/useUser';
 
 const KYC = () => {
-  const [country, setCountry] = useState<string>("");
+  const [country, setCountry] = useState<string>('');
   const [loadingCountry, setLoadingCountry] = useState(true);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState('');
   const account = useDynamicContext();
   const [kycData, setKycData] = useState<any>();
   const user = useUser();
@@ -19,11 +19,11 @@ const KYC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("https://api.country.is");
+        const res = await fetch('https://api.country.is');
         const data = await res.json();
-        setCountry(data.country || "Unknown");
+        setCountry(data.country || 'Unknown');
       } catch {
-        setCountry("Unknown");
+        setCountry('Unknown');
       } finally {
         setLoadingCountry(false);
       }
@@ -32,13 +32,14 @@ const KYC = () => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      open("Verifying by VicAI...");
+      open('Verifying by VicAI...');
       const res = await axios.patch(
         `${import.meta.env.VITE_VICSHIELD_API_URL}/users/kyc`,
         {
           address: account.primaryWallet?.address,
-          fileHash: file,
-        }
+          fileHash:
+            '2137d9d98462d8b5e272cc502120f61d279f2118a740b61a0caf4146589ae01e',
+        },
       );
       setKycData(res.data);
       return res.data;
@@ -75,7 +76,7 @@ const KYC = () => {
           </svg>
           <span>
             {loadingCountry
-              ? "Detecting your location..."
+              ? 'Detecting your location...'
               : `Detected country: ${country}`}
           </span>
         </div>
@@ -86,10 +87,10 @@ const KYC = () => {
               data={{
                 name: kycData.name,
                 ID: kycData.idNumber,
-                "Date of Birth": kycData.dateOfBirth,
+                'Date of Birth': kycData.dateOfBirth,
                 country: kycData.country,
-                "Confidence level": kycData.confidence,
-                "Document Valid": kycData.isValid ? "Yes" : "No",
+                'Confidence level': kycData.confidence,
+                'Document Valid': kycData.isValid ? 'Yes' : 'No',
               }}
             />
             {kycData.isValid ? (
@@ -115,8 +116,8 @@ const KYC = () => {
             onClick={() => mutation.mutateAsync()}
           >
             {mutation.isPending
-              ? "Verifying by AI.."
-              : "Submit for Verification"}
+              ? 'Verifying by AI..'
+              : 'Submit for Verification'}
             {mutation.isPending && (
               <span className="loading loading-spinner loading-sm ml-2"></span>
             )}

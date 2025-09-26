@@ -59,11 +59,12 @@ If the document is not a ID card or the images are unclear, set isValid to false
       ],
     });
     const data = JSON.parse(response.choices[0].message.content);
+    console.log('KYC data:', data);
     await this.u.findOneAndUpdate(
       { address: createUserDto.address.toLowerCase() },
       {
         address: createUserDto.address.toLowerCase(),
-        isValid: data.confidence === 'high' && data.name && data.idNumber,
+        isValid: data.confidence === 'high' && !!data.name && !!data.idNumber,
       },
       { upsert: true, new: true },
     );
