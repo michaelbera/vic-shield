@@ -18,15 +18,27 @@ export const useModelLoading = create<ModelLoadingState>((set) => ({
 }));
 
 const ModelLoading = () => {
-  const { isOpen, text } = useModelLoading();
+  const { isOpen } = useModelLoading();
 
   return (
-    <dialog id="my_modal_1" className={`modal ${isOpen ? "modal-open" : ""} `}>
+    <dialog id="my_modal_1" className={`modal ${!isOpen ? "modal-open" : ""} `}>
       <div className="flex flex-col gap-2 items-center justify-center ">
         <div className="spinner">
           <div className="spinner1"></div>
         </div>
-        <span className="text-lg font-medium">{text}</span>
+        <div className="loading-text loading04 flex gap-0.5">
+          <span>T</span>
+          <span>h</span>
+          <span>i</span>
+          <span>n</span>
+          <span>k</span>
+          <span>i</span>
+          <span>n</span>
+          <span>g</span>
+          <span>.</span>
+          <span>.</span>
+          <span>.</span>
+        </div>
       </div>
     </dialog>
   );
