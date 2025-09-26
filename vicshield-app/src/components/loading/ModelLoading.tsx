@@ -21,7 +21,7 @@ const ModelLoading = () => {
   const { isOpen } = useModelLoading();
 
   return (
-    <dialog id="my_modal_1" className={`modal ${!isOpen ? "modal-open" : ""} `}>
+    <dialog id="my_modal_1" className={`modal ${isOpen ? "modal-open" : ""} `}>
       <div className="flex flex-col gap-2 items-center justify-center ">
         <div className="spinner">
           <div className="spinner1"></div>
