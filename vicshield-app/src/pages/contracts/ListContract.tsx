@@ -1,7 +1,7 @@
-import { useContracts } from "~/hooks/useContract";
-import { Score } from "./ContractDetails";
-import SignContract from "./SignContract";
-import { useNavigate } from "react-router-dom";
+import { useContracts } from '~/hooks/useContract';
+import { Score } from './ContractDetails';
+import SignContract from './SignContract';
+import { useNavigate } from 'react-router-dom';
 
 export default function ContractsList() {
   const contracts = useContracts();
@@ -18,11 +18,11 @@ export default function ContractsList() {
             className="card card-compact w-full bg-base-100 shadow hover:shadow-lg transition cursor-pointer"
             onClick={() => navigate(`/contracts/${c.hash}`)}
           >
-            <figure className="h-40 bg-base-200 flex items-center justify-center">
+            <figure className="h-40 bg-base-100 flex items-center justify-center shadow-sm">
               {/* icon kiểu file */}
               <span className="text-5xl"></span>
               <img
-                src={"https://i.ibb.co/60fvtXtB/image.png"}
+                src={'https://i.ibb.co/60fvtXtB/image.png'}
                 alt={c.title}
                 className=" w-full object-cover"
               />
