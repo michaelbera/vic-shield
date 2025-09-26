@@ -6,7 +6,7 @@ const Login = () => {
     <Container>
       <section className="flex flex-col items-center justify-center min-h-[60vh] px-6 md:px-8 gap-8 py-8 md:py-16">
         <div className="page-title flex flex-col gap-4 md:gap-6 items-center text-center max-w-2xl">
-          <p>Welcome to VicShield</p>
+          <p className="text-primary">Welcome to VicShield</p>
           <span>
             Connect your wallet to get started with secure contract signing.
             First-time users will need to complete KYC verification.

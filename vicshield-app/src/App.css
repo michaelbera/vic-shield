@@ -17,7 +17,7 @@
 
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: "roboto", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -29,8 +29,6 @@ body {
   --card-gradient-alpha-f: -2.25%;
   --card-gradient-alpha-e: 90.8%;
 
-  @apply bg-base-200;
-  font-family: "Poppins", sans-serif;
 }
 
 .page-title p,
